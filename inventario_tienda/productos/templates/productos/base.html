@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Inventario Tienda{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Inventario Tienda de Ropa Deportiva</h1>
+    </header>
+    <nav>
+        <a href="{% url 'productos:agregar_producto' %}">Agregar Producto</a>
+        {# Add other navigation links here if needed #}
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Mi Tienda Deportiva</p>
+    </footer>
+</body>
+</html>
