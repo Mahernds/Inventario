@@ -1,0 +1,36 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Stock{% endblock %}
+
+{% block content %}
+<h1>Stock</h1>
+
+{% if productos %}
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Color</th>
+                <th>Metros de Tela</th>
+                <th>Stock</th>
+                <th>Fecha de Creación</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.nombre_producto }}</td>
+                    <td>{{ producto.get_tipo_display }}</td>
+                    <td>{{ producto.color }}</td>
+                    <td>{{ producto.metros_tela }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>{{ producto.fecha_creacion|date:"d-m-Y H:i" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay productos registrados.</p>
+{% endif %}
+{% endblock %}

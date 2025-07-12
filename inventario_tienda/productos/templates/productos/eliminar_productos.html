@@ -1,0 +1,46 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Eliminar Productos{% endblock %}
+
+{% block content %}
+<h1>Eliminar Productos</h1>
+
+{% if productos %}
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Color</th>
+                <th>Metros de Tela</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.nombre_producto }}</td>
+                    <td>{{ producto.get_tipo_display }}</td>
+                    <td>{{ producto.color }}</td>
+                    <td>{{ producto.metros_tela }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este producto?');">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay productos registrados.</p>
+{% endif %}
+
+<a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary mt-3">← Volver al inventario</a>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Stock de Tela{% endblock %}
+
+{% block content %}
+<h1>Gestión de Tela Disponible</h1>
+
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Agregar Tela</button>
+</form>
+
+<h2>Stock Actual</h2>
+{% if telas %}
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th>Color</th>
+                <th>Metros Disponibles</th>
+                <th>Agregar Metros</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tela in telas %}
+                <tr>
+                    <td>{{ tela.nombre }}</td>
+                    <td>{{ tela.color }}</td>
+                    <td>{{ tela.metros_disponibles }}</td>
+                    <td>
+                        <form method="post" style="display: flex; gap: 5px; align-items: center;">
+                            {% csrf_token %}
+                            <input type="hidden" name="tela_id" value="{{ tela.id }}">
+                            <input type="number" step="0.1" name="metros_extra" required placeholder="Ej: 3.5" class="form-control" style="width: 100px;">
+                            <button type="submit" class="btn btn-outline-primary">Actualizar</button>
+                        </form>
+                        <form method="post" onsubmit="return confirm('¿Estás seguro que deseas eliminar esta tela?');">
+                            {% csrf_token %}
+                            <input type="hidden" name="eliminar_tela_id" value="{{ tela.id }}">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay tela registrada.</p>
+{% endif %}
+
+<a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary mt-3">← Volver al inventario</a>
+{% endblock %}

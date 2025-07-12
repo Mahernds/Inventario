@@ -1,0 +1,50 @@
+{% extends "productos/base.html" %}
+
+{% block title %}Hacer Pedido{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Hacer Pedido</h2>
+
+<form method="post" class="mb-5">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.producto.label_tag }} {{ form.producto }}
+    </div>
+    <div class="mb-3">
+        {{ form.cantidad.label_tag }} {{ form.cantidad }}
+    </div>
+    <button type="submit" class="btn btn-primary">Confirmar Pedido</button>
+</form>
+
+<hr class="my-5">
+
+<h3 class="mb-3">Productos Disponibles</h3>
+{% if productos %}
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Color</th>
+            <th>Metros de Tela</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto.nombre_producto }}</td>
+            <td>{{ producto.get_tipo_display }}</td>
+            <td>{{ producto.color }}</td>
+            <td>{{ producto.metros_tela }}</td>
+            <td>{{ producto.stock }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>No hay productos disponibles.</p>
+{% endif %}
+
+<a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary mt-4">← Volver al inventario</a>
+{% endblock %}

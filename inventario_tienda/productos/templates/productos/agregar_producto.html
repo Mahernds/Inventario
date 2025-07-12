@@ -1,13 +1,30 @@
 {% extends "productos/base.html" %}
-
-{% block title %}Agregar Producto - Inventario Tienda{% endblock %}
+{% block title %}Agregar Producto{% endblock %}
 
 {% block content %}
 <h2>Agregar Nuevo Producto</h2>
+
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    {{ form.nombre_producto.label_tag }}
+    {{ form.nombre_producto }}
+    <br><br>
+
+    {{ form.tipo.label_tag }}
+    {{ form.tipo }}
+    <br><br>
+
+    {{ form.color.label_tag }}
+    {{ form.color }}
+    <br><br>
+
+    {{ form.stock.label_tag }}
+    {{ form.stock }}
+    <br><br>
+
     <button type="submit">Guardar Producto</button>
 </form>
-<a href="#">Volver a la lista (si existe)</a> {# Placeholder for a link to a product list view #}
+
+<p><a href="{% url 'productos:lista_productos' %}">← Volver a la lista</a></p>
 {% endblock %}
